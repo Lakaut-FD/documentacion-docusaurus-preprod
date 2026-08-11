@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkdocumentacion_firma_digital=globalThis.webpackChunkdocumentacion_firma_digital||[]).push([[8488],{8488(i,a,c){c.d(a,{createArchitectureServices:()=>e.S});var e=c(9221);c(1400)}}]);
