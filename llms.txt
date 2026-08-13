@@ -33,8 +33,11 @@ iframe y solo recibe una credencial efímera.
 
 ## Reglas que no se negocian
 
-- La API key vive solo en el backend. El browser recibe únicamente `sessionId`,
-  `clientToken` y `hostedUiUrl`.
+- La API key vive solo en el backend. El browser recibe exactamente lo que devuelve
+  `toRendererContext()`: `sessionId`, `clientToken`, `clientTokenExpiresAt`,
+  `hostedUiOrigin` (un origen, no una URL completa), `allowedOrigin`, `environment` y, si
+  están, `flowConfig`, `email`, `phone` e `identitySubjectStatus`. No existe un campo
+  `hostedUiUrl` en el contexto del renderer.
 - Nunca se construyen mensajes `postMessage` a mano: se usa `HostedUiRenderer`.
 - La verdad final es el backend, no los eventos del browser.
 - Un código de error desconocido se trata como reintentable dentro del paso, nunca como
