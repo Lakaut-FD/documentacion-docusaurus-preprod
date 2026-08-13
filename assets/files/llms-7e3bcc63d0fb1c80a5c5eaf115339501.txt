@@ -24,6 +24,7 @@ iframe y solo recibe una credencial efímera.
 - [Frontend y Hosted UI](/docs/sdk-integracion/frontend-hosted-ui)
 - [Flujos e identidad](/docs/sdk-integracion/flujos-identidad)
 - [Documentos y firma](/docs/sdk-integracion/documentos-firma)
+- [Configurar y rotar el webhook](/docs/sdk-integracion/configurar-webhook)
 - [Eventos, webhooks y estado](/docs/sdk-integracion/eventos-estado)
 - [Errores y recuperación](/docs/sdk-integracion/errores)
 - [Seguridad](/docs/sdk-integracion/seguridad)
