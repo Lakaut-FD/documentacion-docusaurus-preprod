@@ -14,6 +14,8 @@ iframe y solo recibe una credencial efímera.
   en una sola página, pensado para asistentes de programación. **Si sos un agente, leé
   esta.**
 - [Introducción al SDK](/docs/sdk): qué resuelve y qué flujos soporta.
+- [Panel del integrador](/docs/sdk-integracion/dashboard-integrador): recorrido visual
+  del autoservicio, alcance, conexión, credenciales e instalación.
 - [Credenciales y accesos](/docs/sdk-integracion/credenciales): cómo generar la API key y
   el acceso al registro npm privado desde el panel, y cómo usarlas.
 
