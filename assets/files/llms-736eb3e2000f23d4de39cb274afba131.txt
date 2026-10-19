@@ -16,6 +16,7 @@ iframe y solo recibe una credencial efímera.
   en una sola página, pensado para asistentes de programación. **Si sos un agente, leé
   esta.**
 - [Introducción al SDK](/docs/sdk): qué resuelve y qué flujos soporta.
+- [Quickstart](/docs/sdk-integracion/quickstart): de cero a un titular firmando.
 - [Panel del integrador](/docs/sdk-integracion/dashboard-integrador): recorrido visual
   del autoservicio, alcance, conexión, credenciales e instalación.
 - [Credenciales y accesos](/docs/sdk-integracion/credenciales): cómo generar la API key y
@@ -36,9 +37,13 @@ iframe y solo recibe una credencial efímera.
 - [Seguridad](/docs/sdk-integracion/seguridad)
 - [Ambientes, pruebas y versiones](/docs/sdk-integracion/ambientes-versionado)
 - [Ejemplo completo](/docs/sdk-integracion/ejemplo-completo)
+- [Referencia de API](/docs/sdk-integracion/referencia-api)
 
 ## Reglas que no se negocian
 
+- `SIGNING` autentica solo con OTP por SMS (`auth.sms.v1`): mandá `email` y `phone` al
+  crear la sesión y no pidas otro perfil (`422 AUTHENTICATION_PROFILE_NOT_ALLOWED`). El
+  titular puede cambiar una vez a OTP por email desde la Hosted UI.
 - La API key vive solo en el backend. El browser recibe exactamente lo que devuelve
   `toRendererContext()`: `sessionId`, `clientToken`, `clientTokenExpiresAt`,
   `hostedUiOrigin` (un origen, no una URL completa), `allowedOrigin`, `environment` y, si
@@ -50,6 +55,38 @@ iframe y solo recibe una credencial efímera.
   fallo del flujo.
 - Nunca se loguea API key, clientToken, OTP, DNI, sexo, PIN, PDF, evidencia biométrica ni
   JWT.
+
+## Hechos del contrato que no hay que inventar
+
+- `ONBOARDING` y `ONBOARDING_AND_SIGNING` exigen `identitySubject: { dni, sexo }` al crear la
+  sesión: la Hosted UI no lo captura. Sin él, `createSession()` lanza y la API responde
+  `422 IDENTITY_SUBJECT_REQUIRED`. `identitySubjectStatus` vale siempre `"provided"`.
+- "Olvidé mi clave de firma": dentro de `SIGNING` el titular hace nueva biometría y obtiene un
+  certificado nuevo (pasos `identity_verification` y `certificate_issuance`); el anterior no se
+  revoca en el flujo y no hay webhook de revocación.
+- `continuationFromSessionId` (destino `SIGNING` u `ONBOARDING_AND_SIGNING`) exige una sesión
+  de origen `ONBOARDING` o `PASSWORDLESS_AUTH`, en `COMPLETED`, del mismo integrador y el
+  mismo `allowedOrigin`, terminada hace como máximo 2 minutos. Si no, `400 INVALID_REQUEST`.
+- `visibleSignaturePlacement: { version: "1", visible: false }` firma sin sello visible; con
+  `visible: false` no se mandan `page` ni `placement`.
+- El titular puede rechazar el documento: estado terminal `rejected`, evento de browser
+  `lakaut.flow.document_rejected` (con `documentId`) y webhook `auth.session.rejected` (con
+  `data.documentId`). No es un error ni se reintenta la firma.
+- Webhooks emitidos hoy: `auth.session.completed`, `auth.session.failed`,
+  `auth.session.cancelled`, `auth.session.rejected`, `auth.document.signed` (contratos
+  `1.1.0`, `1.2.0` y `1.3.0`) y `hash_signing.batch.updated`. **No** se emiten
+  `auth.session.created`, `auth.session.expired` ni `otp.*`.
+- Una entrega de webhook fallida se reintenta hasta 8 intentos, con esperas crecientes de 5 s
+  a 6 h. El manejo tiene que ser idempotente.
+- `constructWebhookEvent(rawBody, headers, secreto | [nuevo, anterior])` verifica eventos de
+  negocio; el challenge de activación se responde con
+  `constructWebhookChallengeResponse(rawBody, headers, secretoNuevo)`, con un solo secreto.
+- `categoryFor(code)` clasifica solo los códigos de Auth (MAYÚSCULA). En
+  `lakaut.flow.failed` del browser se decide con `event.retryable`.
+- `401 INTEGRATOR_DISABLED` al crear una sesión también significa API key errónea, rotada o
+  revocada, o `integratorId` desconocido o de otro ambiente: revisá la credencial primero.
+  `401 UNAUTHORIZED` es que falta un header; en `status`, `complete`, `cancel` y `catalog`
+  también una credencial que no valida.
 
 ## Conceptos de firma digital
 
