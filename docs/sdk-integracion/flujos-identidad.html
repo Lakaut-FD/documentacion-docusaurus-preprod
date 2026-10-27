@@ -5,8 +5,8 @@
 <meta name="generator" content="Docusaurus v3.10.2">
 <title data-rh="true">Flujos e identidad | Lakaut AC</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/flujos-identidad"><meta data-rh="true" property="og:locale" content="es"><meta data-rh="true" name="docusaurus_locale" content="es"><meta data-rh="true" name="docsearch:language" content="es"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Flujos e identidad | Lakaut AC"><meta data-rh="true" name="description" content="Autenticación passwordless"><meta data-rh="true" property="og:description" content="Autenticación passwordless"><link data-rh="true" rel="icon" href="/documentacion-docusaurus-preprod/img/lakaut-logo.svg"><link data-rh="true" rel="canonical" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/flujos-identidad"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/flujos-identidad" hreflang="es"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/flujos-identidad" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SDK de Integración","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk"},{"@type":"ListItem","position":2,"name":"Flujos e identidad","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/flujos-identidad"}]}</script><link rel="alternate" type="application/rss+xml" href="/documentacion-docusaurus-preprod/blog/rss.xml" title="Lakaut AC RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/documentacion-docusaurus-preprod/blog/atom.xml" title="Lakaut AC Atom Feed"><link rel="stylesheet" href="/documentacion-docusaurus-preprod/assets/css/styles.1783dd37.css">
-<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.fc4b5cf8.js" defer="defer"></script>
-<script src="/documentacion-docusaurus-preprod/assets/js/main.7f37ef66.js" defer="defer"></script>
+<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.daebdbac.js" defer="defer"></script>
+<script src="/documentacion-docusaurus-preprod/assets/js/main.17a9d35b.js" defer="defer"></script>
 </head>
 <body>
 <svg style="display: none;"><defs>
@@ -16,6 +16,11 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="autenticación-passwordless">Autenticación passwordless<a href="#autenticación-passwordless" class="hash-link" aria-label="Enlace directo al Autenticación passwordless" title="Enlace directo al Autenticación passwordless" translate="no">​</a></h2>
 <p>Cada recorrido autentica con un perfil de factores:</p>
 <table><thead><tr><th>Flujo</th><th>Perfil</th><th>OTP que se pide</th></tr></thead><tbody><tr><td><code>PASSWORDLESS_AUTH</code></td><td><code>auth.email-sms.v1</code>, <code>auth.email.v1</code> o <code>auth.sms.v1</code></td><td>Según el perfil habilitado</td></tr><tr><td><code>ONBOARDING</code></td><td><code>auth.email-sms.v1</code></td><td>Email y SMS</td></tr><tr><td><code>SIGNING</code></td><td><code>auth.sms.v1</code></td><td><strong>Solo SMS</strong>, con cambio opcional a email</td></tr><tr><td><code>ONBOARDING_AND_SIGNING</code></td><td><code>auth.email-sms.v1</code></td><td>Email y SMS</td></tr></tbody></table>
+<p><strong>Excepción:</strong> si en <code>ONBOARDING_AND_SIGNING</code> el firmante ya tiene un certificado listo
+para firmar, Auth resuelve la sesión con <code>auth.sms.v1</code> igual que <code>SIGNING</code> y devuelve
+<code>flowConfig.onboardingRequired: false</code>. En ese caso Hosted UI no muestra los términos del
+suscriptor y ofrece el mismo cambio a email que la firma. Requiere <code>@lakaut/server</code>
+0.1.0-rc.80 o posterior.</p>
 <p>Si el backend ya proporcionó los inputs requeridos, Hosted UI puede avanzar directamente
 al código correspondiente.</p>
 <p>Los códigos son:</p>
@@ -104,6 +109,10 @@ solicita PIN, no firma y no inicia onboarding automáticamente.</p>
 sesión. Igual que <code>ONBOARDING</code>, exige <code>identitySubject</code>.</p>
 <p>Elegí este flujo cuando ambos procesos forman parte de una sola experiencia. Si la
 firma puede ocurrir mucho después del alta, usá sesiones separadas.</p>
+<p><strong>Si el firmante ya tiene un certificado vigente</strong>, no hay alta que hacer: Auth autentica
+la sesión como una firma común (<code>auth.sms.v1</code>, <code>flowConfig.onboardingRequired: false</code>) y
+la Hosted UI salta los términos del suscriptor, igual que en <code>SIGNING</code>. Tratá esta sesión
+como firma a todos los efectos; el <code>flowType</code>/<code>journeyId</code> que pediste no cambia.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="estados-de-identidad">Estados de identidad<a href="#estados-de-identidad" class="hash-link" aria-label="Enlace directo al Estados de identidad" title="Enlace directo al Estados de identidad" translate="no">​</a></h2>
 <p>Durante la verificación pueden observarse estados de alto nivel:</p>
 <table><thead><tr><th>Estado</th><th>Significado</th></tr></thead><tbody><tr><td><code>pending</code></td><td>Lakaut continúa procesando</td></tr><tr><td><code>in_progress</code></td><td>La validación está en curso</td></tr><tr><td><code>approved</code></td><td>La identidad fue aprobada</td></tr><tr><td><code>retryable_failed</code></td><td>Puede iniciarse un nuevo intento</td></tr><tr><td><code>final_failed</code></td><td>El flujo no puede continuar</td></tr><tr><td><code>expired</code></td><td>La sesión o intento venció</td></tr><tr><td><code>technical_failed</code></td><td>Falló un proveedor o componente técnico</td></tr></tbody></table>
