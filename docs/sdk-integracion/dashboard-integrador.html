@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.10.2">
 <title data-rh="true">Panel del integrador | Lakaut AC</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/dashboard-integrador"><meta data-rh="true" property="og:locale" content="es"><meta data-rh="true" name="docusaurus_locale" content="es"><meta data-rh="true" name="docsearch:language" content="es"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Panel del integrador | Lakaut AC"><meta data-rh="true" name="description" content="El panel Integradores → Mi integración es el lugar de autoservicio para revisar el"><meta data-rh="true" property="og:description" content="El panel Integradores → Mi integración es el lugar de autoservicio para revisar el"><link data-rh="true" rel="icon" href="/documentacion-docusaurus-preprod/img/lakaut-logo.svg"><link data-rh="true" rel="canonical" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/dashboard-integrador"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/dashboard-integrador" hreflang="es"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/dashboard-integrador" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SDK de Integración","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk"},{"@type":"ListItem","position":2,"name":"Panel del integrador","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/dashboard-integrador"}]}</script><link rel="alternate" type="application/rss+xml" href="/documentacion-docusaurus-preprod/blog/rss.xml" title="Lakaut AC RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/documentacion-docusaurus-preprod/blog/atom.xml" title="Lakaut AC Atom Feed"><link rel="stylesheet" href="/documentacion-docusaurus-preprod/assets/css/styles.1783dd37.css">
-<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.b3cf68a2.js" defer="defer"></script>
+<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.db5f10f9.js" defer="defer"></script>
 <script src="/documentacion-docusaurus-preprod/assets/js/main.17a9d35b.js" defer="defer"></script>
 </head>
 <body>
@@ -24,7 +24,7 @@ En producción, desde
 <strong>No hay integradores disponibles</strong>, pedí la asignación a tu contacto en Lakaut. No es un
 problema de tus credenciales de acceso.</p></div></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="qué-administra-cada-parte">Qué administra cada parte<a href="#qué-administra-cada-parte" class="hash-link" aria-label="Enlace directo al Qué administra cada parte" title="Enlace directo al Qué administra cada parte" translate="no">​</a></h2>
-<table><thead><tr><th>Elemento</th><th>Quién lo administra</th></tr></thead><tbody><tr><td>Alta inicial, empresa y responsable</td><td>Lakaut</td></tr><tr><td>Recorridos y métodos contratados</td><td>Lakaut, según el acuerdo comercial</td></tr><tr><td>Paquetes SDK habilitados y canal</td><td>Lakaut</td></tr><tr><td>Dominios permitidos</td><td>El integrador desde el panel</td></tr><tr><td>URL y verificación del webhook</td><td>El integrador desde el panel</td></tr><tr><td>API key SDK y acceso Nexus</td><td>El integrador desde el panel</td></tr></tbody></table>
+<table><thead><tr><th>Elemento</th><th>Quién lo administra</th></tr></thead><tbody><tr><td>Alta inicial, empresa y responsable</td><td>Lakaut</td></tr><tr><td>Recorridos y métodos contratados</td><td>Lakaut, según el acuerdo comercial</td></tr><tr><td>Paquetes SDK habilitados y canal</td><td>Lakaut</td></tr><tr><td>Dominios permitidos</td><td>El integrador desde el panel</td></tr><tr><td>URL y verificación del webhook</td><td>El integrador desde el panel</td></tr><tr><td>API key SDK y acceso al registro npm</td><td>El integrador desde el panel</td></tr></tbody></table>
 <p>Esta separación es importante: el panel permite operar la integración, pero no ampliar
 un contrato ni habilitar recorridos por cuenta propia.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-resumen-y-alcance-contratado">1. Resumen y alcance contratado<a href="#1-resumen-y-alcance-contratado" class="hash-link" aria-label="Enlace directo al 1. Resumen y alcance contratado" title="Enlace directo al 1. Resumen y alcance contratado" translate="no">​</a></h2>
@@ -97,7 +97,7 @@ cambio: esperá a que la configuración se propague y hacé una prueba controlad
 <p>Hay dos credenciales con propósitos separados:</p>
 <ul>
 <li class=""><strong>API key SDK:</strong> autentica el backend al crear y administrar sesiones.</li>
-<li class=""><strong>Acceso Nexus:</strong> permite que desarrollo y CI instalen los paquetes npm autorizados.</li>
+<li class=""><strong>Acceso al registro npm:</strong> permite que desarrollo y CI instalen los paquetes npm autorizados.</li>
 </ul>
 <p>Seleccionar <strong>Generar</strong> crea una credencial del tipo correspondiente. El secreto se
 muestra una sola vez; Lakaut no puede volver a recuperarlo. Copialo directamente a un
@@ -116,7 +116,7 @@ backend o de CI antes de confirmarlas. Para detalles y ejemplos de headers, cons
 <p><img decoding="async" loading="lazy" alt="Comandos de instalación autorizados para preproducción" src="/documentacion-docusaurus-preprod/assets/images/dashboard-integrador-instalacion-1abd9cf94629540ac12f9d4587eb3b55.png" width="1517" height="700" class="img_ev3q"></p>
 <p>El bloque negro muestra los comandos exactos para los paquetes y el canal concedidos a
 la integración. La captura usa <code>preprod</code>; en otro ambiente el canal cambia.</p>
-<p>La credencial Nexus se configura en npm o pnpm como un secreto de CI. No se escribe en
+<p>La credencial del registro npm se configura en npm o pnpm como un secreto de CI. No se escribe en
 el comando ni en <code>package.json</code>. Después de estabilizar la integración, fijá una versión
 exacta y conservá el lockfile para que los builds sean reproducibles.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recorrido-recomendado-de-primera-configuración">Recorrido recomendado de primera configuración<a href="#recorrido-recomendado-de-primera-configuración" class="hash-link" aria-label="Enlace directo al Recorrido recomendado de primera configuración" title="Enlace directo al Recorrido recomendado de primera configuración" translate="no">​</a></h2>
@@ -127,7 +127,7 @@ configuración server-side.</li>
 <li class="">Declará los dominios HTTPS exactos que van a embeber la Hosted UI.</li>
 <li class="">Guardá y verificá el webhook.</li>
 <li class="">Generá la API key SDK y guardala en el backend.</li>
-<li class="">Generá el acceso Nexus y guardalo en desarrollo o CI.</li>
+<li class="">Generá el acceso al registro npm y guardalo en desarrollo o CI.</li>
 <li class="">Instalá los paquetes mostrados por el panel.</li>
 <li class="">Ejecutá una sesión de prueba completa y comprobá el evento final en tu backend.</li>
 </ol>

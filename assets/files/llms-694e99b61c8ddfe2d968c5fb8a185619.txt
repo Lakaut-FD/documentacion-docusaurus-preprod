@@ -1,8 +1,8 @@
 # Lakaut AC — Documentación de integración
 
-> Lakaut AC es una Autoridad Certificante argentina. El SDK permite incorporar
-> autenticación passwordless, validación de identidad, emisión de certificado digital y
-> firma de documentos con validez legal dentro de una aplicación web.
+> Lakaut AC es una Autoridad Certificante argentina. El SDK permite incorporar validación
+> de identidad, emisión de certificado digital y firma de documentos con validez legal
+> dentro de una aplicación web.
 
 El SDK se divide en dos paquetes: `@lakaut/server` corre en el backend del integrador y
 conserva las credenciales privadas; `@lakaut/browser` monta la Hosted UI de Lakaut en un
@@ -65,8 +65,8 @@ iframe y solo recibe una credencial efímera.
   certificado nuevo (pasos `identity_verification` y `certificate_issuance`); el anterior no se
   revoca en el flujo y no hay webhook de revocación.
 - `continuationFromSessionId` (destino `SIGNING` u `ONBOARDING_AND_SIGNING`) exige una sesión
-  de origen `ONBOARDING` o `PASSWORDLESS_AUTH`, en `COMPLETED`, del mismo integrador y el
-  mismo `allowedOrigin`, terminada hace como máximo 2 minutos. Si no, `400 INVALID_REQUEST`.
+  de origen `ONBOARDING`, en `COMPLETED`, del mismo integrador y el mismo `allowedOrigin`,
+  terminada hace como máximo 2 minutos. Si no, `400 INVALID_REQUEST`.
 - `visibleSignaturePlacement: { version: "1", visible: false }` firma sin sello visible; con
   `visible: false` no se mandan `page` ni `placement`.
 - El titular puede rechazar el documento: estado terminal `rejected`, evento de browser

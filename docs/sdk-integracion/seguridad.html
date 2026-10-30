@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.10.2">
 <title data-rh="true">Seguridad | Lakaut AC</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/seguridad"><meta data-rh="true" property="og:locale" content="es"><meta data-rh="true" name="docusaurus_locale" content="es"><meta data-rh="true" name="docsearch:language" content="es"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Seguridad | Lakaut AC"><meta data-rh="true" name="description" content="Checklist obligatorio"><meta data-rh="true" property="og:description" content="Checklist obligatorio"><link data-rh="true" rel="icon" href="/documentacion-docusaurus-preprod/img/lakaut-logo.svg"><link data-rh="true" rel="canonical" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/seguridad"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/seguridad" hreflang="es"><link data-rh="true" rel="alternate" href="https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/seguridad" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"SDK de Integración","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk"},{"@type":"ListItem","position":2,"name":"Seguridad","item":"https://lakaut-fd.github.io/documentacion-docusaurus-preprod/docs/sdk-integracion/seguridad"}]}</script><link rel="alternate" type="application/rss+xml" href="/documentacion-docusaurus-preprod/blog/rss.xml" title="Lakaut AC RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/documentacion-docusaurus-preprod/blog/atom.xml" title="Lakaut AC Atom Feed"><link rel="stylesheet" href="/documentacion-docusaurus-preprod/assets/css/styles.1783dd37.css">
-<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.b3cf68a2.js" defer="defer"></script>
+<script src="/documentacion-docusaurus-preprod/assets/js/runtime~main.db5f10f9.js" defer="defer"></script>
 <script src="/documentacion-docusaurus-preprod/assets/js/main.17a9d35b.js" defer="defer"></script>
 </head>
 <body>
@@ -16,9 +16,9 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="checklist-obligatorio">Checklist obligatorio<a href="#checklist-obligatorio" class="hash-link" aria-label="Enlace directo al Checklist obligatorio" title="Enlace directo al Checklist obligatorio" translate="no">​</a></h2>
 <ul>
 <li class="">API key únicamente en backend.</li>
-<li class="">Credenciales de Nexus únicamente en gestores de secretos de desarrollo y CI.</li>
-<li class="">Rotaciones y revocaciones de API key y credencial de Nexus hechas por vos mismo desde
-el dashboard, no vía ticket.</li>
+<li class="">Credenciales del registro npm únicamente en gestores de secretos de desarrollo y CI.</li>
+<li class="">Rotaciones y revocaciones de API key y credencial del registro npm hechas por vos mismo
+desde el dashboard, no vía ticket.</li>
 <li class=""><code>clientToken</code> solo en memoria.</li>
 <li class=""><code>allowedOrigin</code> de cada sesión: HTTPS exacto, sin wildcard.</li>
 <li class="">Dominios declarados: comodín solo si tu app crea subdominios sola, y acotado a una rama
@@ -45,7 +45,7 @@ necesitás algún campo extra que <code>toRendererContext</code> no copia —<co
 objeto desde cero.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="gestión-de-credenciales">Gestión de credenciales<a href="#gestión-de-credenciales" class="hash-link" aria-label="Enlace directo al Gestión de credenciales" title="Enlace directo al Gestión de credenciales" translate="no">​</a></h2>
 <p>Lakaut asigna <code>integratorId</code> una única vez, al dar de alta la integración. A partir de
-ahí, emitir, rotar y revocar tanto la API key de Auth como la credencial de Nexus son
+ahí, emitir, rotar y revocar tanto la API key de Auth como la credencial del registro npm son
 operaciones de autoservicio desde <strong>Integradores → Mi integración</strong> (ver
 <a class="" href="/documentacion-docusaurus-preprod/docs/sdk-integracion/credenciales">Credenciales y accesos</a>) — no requieren pedirle nada a Lakaut. Los
 secretos de webhook se generan, rotan y verifican desde el mismo dashboard (ver
@@ -58,8 +58,8 @@ El integrador:</p>
 <li class="">elimina las copias anteriores después de confirmar la rotación;</li>
 <li class="">no comparte credenciales entre ambientes o proveedores.</li>
 </ul>
-<p>El usuario de Nexus es de solo lectura y no reemplaza a la API key de Auth.</p>
-<p>La API key y Nexus se validan con hashes. El webhook es distinto: Lakaut necesita el
+<p>El usuario del registro npm es de solo lectura y no reemplaza a la API key de Auth.</p>
+<p>La API key y la credencial del registro npm se validan con hashes. El webhook es distinto: Lakaut necesita el
 secreto vigente para firmar, por lo que mantiene custodia cifrada separada de la copia
 efímera que muestra una sola vez. No se expone en consultas, auditoría ni logs.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="origen-y-framing">Origen y framing<a href="#origen-y-framing" class="hash-link" aria-label="Enlace directo al Origen y framing" title="Enlace directo al Origen y framing" translate="no">​</a></h2>
@@ -85,8 +85,9 @@ el onboarding; aun así, validá cada sesión contra esa allowlist y no supongas
 PREPROD y PROD comparten host:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain"># Preproducción</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">frame-src &#x27;self&#x27; https://sdk-preprod.lakautac.com.ar;</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"># Producción</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">frame-src &#x27;self&#x27; https://sdk.lakautac.com.ar;</span><br></div></code></pre></div></div>
 <p>Si tu CSP usa <code>child-src</code>, mantenelo alineado. No abras <code>frame-src *</code>.</p>
-<p>Para Veriff, Lakaut configura sus propios orígenes dentro de Hosted UI. El integrador
-no debe hardcodear tokens ni URLs de sesión del proveedor.</p>
+<p>Para el proveedor de validación de identidad, Lakaut configura sus propios orígenes
+dentro de Hosted UI. El integrador no debe hardcodear tokens ni URLs de sesión del
+proveedor.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="permissions-policy">Permissions Policy<a href="#permissions-policy" class="hash-link" aria-label="Enlace directo al Permissions Policy" title="Enlace directo al Permissions Policy" translate="no">​</a></h2>
 <p>No bloquees cámara o micrófono para Hosted UI:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">Permissions-Policy: camera=(self &quot;https://sdk-preprod.lakautac.com.ar&quot;),</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">                    microphone=(self &quot;https://sdk-preprod.lakautac.com.ar&quot;)</span><br></div></code></pre></div></div>
